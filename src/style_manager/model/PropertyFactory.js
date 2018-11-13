@@ -1,5 +1,21 @@
 var Backbone = require('backbone');
 
+function googleFonts() {
+  var gf = [];
+  $.ajax({
+    url:
+      'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDTHt6CyrHghrGM7PxCIzwU7-pe8w0bW04',
+    type: 'GET',
+    async: false,
+    success: function(fonts) {
+      for (var i = 0; i < fonts.items.length; i++) {
+        gf.push(fonts.items[i].family);
+      }
+    }
+  });
+  return gf;
+}
+
 module.exports = () => ({
   /**
    * Build props object by their name
@@ -429,6 +445,7 @@ module.exports = () => ({
             'Trebuchet MS, Helvetica' + ss,
             'Verdana, Geneva' + ss
           ];
+          fonts.push(...googleFonts());
           obj.list = [];
           for (var j = 0, l = fonts.length; j < l; j++) {
             var font = {};
